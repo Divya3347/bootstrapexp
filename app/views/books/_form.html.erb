@@ -1,0 +1,26 @@
+<div class="text-center container-fluid"><br>
+<%= form_with model: @book do |f|%>
+    <%= f.label :name , "Name : " , class:"col-lg-1"%>
+    <%= f.text_field :name , placeholder:"Enter book name", class:"col-lg-3"%><br><br>
+
+    <%= f.label :auhtor , "Author : ", class:"col-lg-1"%>
+    <%= f.text_field :author , placeholder:"Enter book author", class:"col-lg-3"%><br><br>
+
+    <%= f.label :price , "Price : ", class:"col-lg-1"%>
+    <%= f.text_field :price , placeholder:"Enter book price", class:"col-lg-3"%><br><br>
+
+    <%= f.label :quantity , "Quantity : ", class:"col-lg-1"%>
+    <%= f.text_field :quantity , placeholder:"Enter book quantity", class:"col-lg-3"%><br><br>
+
+    <%= f.label :avatars , "Add Image : ", class:"col-lg-1"%>
+    <%= f.file_field :avatars ,multiple:true, direct_upload: true ,class:"col-lg-3"%>
+    <% @book.errors.full_messages_for(:avatars).each do |message|%>
+        <%= message %>
+    <% end %><br><br>
+
+<div class="d-flex justify-content-center">
+    <%= f.submit "Save Book" , class:"btn btn-info"%>
+</div>
+<% end %>
+</div><br><br>
+

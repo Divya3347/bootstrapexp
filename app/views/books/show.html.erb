@@ -1,0 +1,43 @@
+<div class="text-center mt-5">
+    <h1 class="text-primary">Book Detail</h1><br><br>
+    <h4 class="d-flex flex-row justify-content-around">
+        <div>Name : <%= @book.name %></div>
+        <div>Author : <%= @book.author %></div>
+        <div>Price : <%= @book.price %></div>
+        <div>Quantity : <%= @book.quantity %></div>
+    </h4>
+</div><br>
+<div class="d-flex justify-content-center"> 
+    <% if @book.avatars.attached?%>
+        <% @book.avatars.each do |image|%>
+            <% if image.image? %>
+                <div class="d-flex justify-content-center">
+                    <%= link_to rails_blob_path(image, disposition: "preview") do %>
+                        <%= image_tag image , size:"200x100"%>
+                        <%= button_to "Delete Avatar", delete_image_book_path(@book,image) , method: :delete , class:"btn btn-danger"%>
+                    <% end %>
+                </div>
+            <% elsif image.video? %>
+                <%= video_tag image, controls:true,size:"200x300"%>
+                <%= button_to "Delete Avatar", delete_image_book_path(@book,image) , method: :delete , class:"btn btn-danger"%>
+            <% elsif image.audio? %>
+                <%= audio_tag image , controls:true%>
+            <% end %>
+        <% end %>
+    <% end %>
+</div><br>
+<div class="d-flex justify-content-center align-middle">
+    <% @book.avatars.each do |avatar| %> 
+        <% if avatar.content_type == "application/pdf" %>
+            PDF Options : &nbsp &nbsp
+            <%= link_to "Preview", rails_blob_path(avatar, disposition: "preview") %>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+            <%= link_to "Download", rails_blob_path(avatar, disposition: "attachment") %>&nbsp &nbsp &nbsp &nbsp 
+            <%= button_to "Delete PDF", delete_image_book_path(@book,avatar) , method: :delete , class:"btn btn-danger"%>
+        <% end %>
+    <% end %>
+</div><br>
+<div class="d-flex justify-content-center">
+    <%= link_to "Edit Book" , edit_book_path , class:"btn btn-warning"%>&nbsp &nbsp
+    <%= button_to "Delete Book" , book_path ,  method: :delete , data: { confirm:"Are you sure?" } , class:"btn btn-danger"%>&nbsp &nbsp
+    <%= link_to "View All" , root_path , class:"btn btn-info"%>
+</div>
